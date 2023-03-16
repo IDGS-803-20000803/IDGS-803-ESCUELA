@@ -1,0 +1,43 @@
+{% macro render_input(name, placeholder, type = "text") %}
+<div class="input-group">
+  <div class="input-group-text"> <label for="{{name}}" class="control-label">ENTRADA</label></div>
+  <input  type="{{type}}" name="{{name}}" placeholder="{{placeholder}}" value=""/>
+</div>
+{%endmacro%}
+
+{% macro render_field(field) %}
+<div class="input-group">
+  <div class="input-group-text">
+      {{field.label}}
+      {{field(**kwargs)|safe}}
+    </div>
+  </div>
+  {%if field.errors%}
+  <ul>
+    {%for error in field.errors%}
+    <li style="color:red;">{{error}}</li>
+    {%endfor%}
+  </ul>
+  {%endif%}
+{%endmacro%}
+
+{% macro render_select(field) %}
+<div class="input-group">
+  <div class="input-group-text">
+      {{field.label}}
+      {{field(**kwargs)|safe}}
+    </div>
+  </div>
+  {%if field.errors%}
+  <ul>
+    {%for error in field.errors%}
+    <li style="color:red;">{{error}}</li>
+    {%endfor%}
+  </ul>
+  {%endif%}
+{%endmacro%}
+
+
+
+
+

@@ -1,0 +1,41 @@
+{% extends "layout.html" %} 
+ 
+ {% block content%}
+   {%from "_macros.html" import render_field%}
+ 
+   <div class="container">
+    <div class="row my-3">
+        <h1>Catalogo Alumnos</h1>
+        <form name="sent" action="/deleteAlumno" id="form1" method="POST">
+            {{form.csrf_token}}
+            <div class="row control-group">
+                <div class="form-group col-xs-12 float-label-form-group controls">
+                    {{render_field(form.id,class='form-control', value=id)}}
+                </div>
+            </div>
+            <div class="row control-group">
+                <div class="form-group col-xs-12 float-label-form-group controls">
+                    {{render_field(form.nombre,class='form-control', value=nombre)}}
+                </div>
+            </div>
+            <div class="row control-group">
+                <div class="form-group col-xs-12 float-label-form-group controls">
+                    {{render_field(form.apellidos,class='form-control', value=apellidos)}}
+                </div>
+            </div>
+            
+            <div class="row control-group">
+                <div class="form-group col-xs-12 float-label-form-group controls">
+                    {{render_field(form.email,class='form-control', value=email)}}
+                </div>
+            </div>
+            <input type="hidden" name="csrf_token" value="{{csrf_token()}}"/>
+            <input type="submit" class="btn btn-danger my-3"  name="borrar" value="Eliminar"/>
+            <a href="/getAlumnos" class="btn btn-warning">
+                <i class="fas fa-window-close icon-white"></i> Cancelar
+            </a>
+        </form>
+    </div>
+   </div>
+ 
+{% endblock %}
