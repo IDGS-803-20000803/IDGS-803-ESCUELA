@@ -49,14 +49,16 @@ def delete_maestro():
     maestro_form = forms.UserTeacherForm(request.form)
     if request.method == 'GET':
         id = request.args.get('id')
-        nombre = request.args.get('nombre')
-        materia = request.args.get('materia')
-        carrera = request.args.get('carrera')
-        celular = request.args.get('celular')
-        email = request.args.get('email')
-       
-        return render_template('EliminarMaestros.html',form = maestro_form, id = id, nombre = nombre, materia = materia, carrera = carrera, email = email, celular = celular)
-    
+        try:
+            connection = get_connection()
+            with connection.cursor() as cursor:
+                    cursor.execute('call buscar_id_maestro(%s)', (id,))
+                    resulset = cursor.fetchall()
+                    print(resulset)
+                    return render_template('EliminarMaestros.html', form = maestro_form, id = id,resulset = resulset)
+        except Exception as ex:
+            flash("No se encontro ningun registro en la BD: " + str(ex))
+        
     if request.method == 'POST':
         id = maestro_form.id.data
         try:
@@ -76,14 +78,25 @@ def update_maestro():
     maestro_form = forms.UserTeacherForm(request.form)
     if request.method == 'GET':
         id = request.args.get('id')
+        try:
+            connection = get_connection()
+            with connection.cursor() as cursor:
+                    cursor.execute('call buscar_id_maestro(%s)', (id,))
+                    resulset = cursor.fetchall()
+                    print(resulset)
+                    return render_template('Modificar_Maestros.html', form = maestro_form, id = id,resulset = resulset)
+        except Exception as ex:
+            flash("No se encontro ningun registro en la BD: " + str(ex))
+
+        '''
         nombre = request.args.get('nombre')
         materia = request.args.get('materia')
         carrera = request.args.get('carrera')
         celular = request.args.get('celular')
         email = request.args.get('email')
-        
+       
         return render_template('Modificar_Maestros.html',form = maestro_form, id = id, nombre = nombre, materia = materia, carrera = carrera, email = email, celular = celular)
-    
+         '''
     if request.method == 'POST':
         id = maestro_form.id.data
         nombre = maestro_form.nombre.data
